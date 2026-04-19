@@ -680,7 +680,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       zhDesc: "负责车辆感知数据可视化与 B 端工具链设计，解决海量数据下的实时渲染与分析效率问题。",
       enDesc: "Responsible for vehicle perception data visualization and B-end toolchain design, solving real-time rendering and analysis efficiency issues under massive data.",
       image: "/BrowserDesktop.png",
-      video: "/屏幕录制2026-04-12 11.00.23.mov",
+      video: "/Miviz可视化分析平台.mov",
     },
     { 
       name: "清华天格计划项目", 
