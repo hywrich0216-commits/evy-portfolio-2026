@@ -613,7 +613,7 @@ const AboutSection = ({ setCursorType }: { setCursorType: (type: string) => void
         >
           <div className="aspect-square w-full max-w-[180px] rounded-full border border-white/10 overflow-hidden bg-neutral-900/50 relative group">
             <img 
-              src="https://github.com/hywrich0216-commits/portfolio-assets/blob/main/IMG_0127.JPG?raw=true" 
+              src="@/IMG_0127.JPG" 
               alt="Portrait" 
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-80 group-hover:grayscale-0 transition-all duration-700"
@@ -679,7 +679,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       tags: ["DATA VISUALIZATION", "B-END TOOL"],
       zhDesc: "负责车辆感知数据可视化与 B 端工具链设计，解决海量数据下的实时渲染与分析效率问题。",
       enDesc: "Responsible for vehicle perception data visualization and B-end toolchain design, solving real-time rendering and analysis efficiency issues under massive data.",
-      image: "https://github.com/hywrich0216-commits/portfolio-assets/blob/main/Browser%20Desktop.png?raw=true",
+      image: "@/Browser Desktop.png",
       video: "https://github.com/hywrich0216-commits/portfolio-assets/raw/refs/heads/main/%E5%B1%8F%E5%B9%95%E5%BD%95%E5%88%B62026-04-12%2011.00.23.mov",
     },
     { 
@@ -688,7 +688,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       tags: ["SCIENTIFIC MONITORING", "CROSS-DISCIPLINARY"],
       zhDesc: "科学卫星数据监测看板设计，致力于在复杂业务中实现体验与战略的平衡。",
       enDesc: "Scientific satellite data monitoring dashboard design, dedicated to balancing experience and strategy in complex business.",
-      image: "https://github.com/hywrich0216-commits/portfolio-assets/blob/main/%E4%B8%BB%E9%A1%B5.png?raw=true",
+      image: "@/主页.png",
     },
     { 
       name: "MIcar-B Design System", 
@@ -696,7 +696,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       tags: ["DESIGN SYSTEM", "COMPONENT LIBRARY"],
       zhDesc: "小米汽车 B 端组件库设计系统，构建统一的设计语言与工程化规范。",
       enDesc: "Xiaomi EV B-end component library design system, building a unified design language and engineering specifications.",
-      image: "https://github.com/hywrich0216-commits/portfolio-assets/blob/main/cover.png?raw=true",
+      image: "@/cover.png",
     },
     { 
       name: "小米汽车MiSim仿真平台", 
@@ -704,7 +704,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       tags: ["SYSTEM ARCHITECTURE", "HMI DESIGN"],
       zhDesc: "负责构建高精度的自动驾驶仿真界面，利用数据可视化技术解决复杂场景下的交互效率问题。",
       enDesc: "Architecting high-precision autonomous driving simulation interfaces, leveraging data visualization to solve complex interaction efficiency challenges.",
-      image: "https://github.com/hywrich0216-commits/portfolio-assets/blob/main/misim%E4%BB%BF%E7%9C%9F%E5%B9%B3%E5%8F%B0.png?raw=true",
+      image: "@/misim仿真平台.png",
     },
     { 
       name: "清华国际艺术与设计展", 
@@ -721,7 +721,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       tags: ["SOCIAL INTERACTION", "EMOTIONAL CONNECTION"],
       zhDesc: "探索性社交交互设计，致力于提升用户间的情感连接与互动体验。",
       enDesc: "Exploratory social interaction design, dedicated to enhancing emotional connection and interaction experience among users.",
-      image: "https://github.com/hywrich0216-commits/portfolio-assets/blob/main/host.png?raw=true",
+      image: "@/host.png",
     },
   ];
 
@@ -1108,7 +1108,7 @@ const ProjectDetail = ({ project, onBack }: { project: any, onBack: () => void }
               transition={{ duration: 1 }}
               className="rounded-[40px] overflow-hidden border border-white/5 bg-neutral-900/50"
             >
-              <img src="https://github.com/hywrich0216-commits/portfolio-assets/blob/main/555.png?raw=true" alt="Design 1" className="w-full h-auto transition-all duration-1000" />
+              <img src="@/555.png" alt="Design 1" className="w-full h-auto transition-all duration-1000" />
             </motion.div>
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
@@ -1116,7 +1116,7 @@ const ProjectDetail = ({ project, onBack }: { project: any, onBack: () => void }
               transition={{ duration: 1 }}
               className="rounded-[40px] overflow-hidden border border-white/5 bg-neutral-900/50"
             >
-              <img src="https://github.com/hywrich0216-commits/portfolio-assets/blob/main/777.png?raw=true" alt="Design 2" className="w-full h-auto transition-all duration-1000" />
+              <img src="@/777.png" alt="Design 2" className="w-full h-auto transition-all duration-1000" />
             </motion.div>
           </div>
         </div>
