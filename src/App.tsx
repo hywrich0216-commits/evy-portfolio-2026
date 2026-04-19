@@ -680,7 +680,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       zhDesc: "负责车辆感知数据可视化与 B 端工具链设计，解决海量数据下的实时渲染与分析效率问题。",
       enDesc: "Responsible for vehicle perception data visualization and B-end toolchain design, solving real-time rendering and analysis efficiency issues under massive data.",
       image: "/BrowserDesktop.png",
-      video: "https://github.com/hywrich0216-commits/portfolio-assets/raw/refs/heads/main/%E5%B1%8F%E5%B9%95%E5%BD%95%E5%88%B62026-04-12%2011.00.23.mov",
+      video: "/屏幕录制2026-04-12_11.00.23.mov",
     },
     { 
       name: "清华天格计划项目", 
@@ -713,7 +713,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       zhDesc: "沉浸式线上展厅设计，探索数字化叙事在艺术展览中的应用。",
       enDesc: "Immersive online exhibition hall design, exploring the application of digital narrative in art exhibitions.",
       image: "https://picsum.photos/seed/tsinghua/1200/800",
-      video: "https://github.com/hywrich0216-commits/portfolio-assets/raw/refs/heads/main/%E6%B8%85%E5%8D%8E%E5%9B%BD%E9%99%85%E5%B1%95%E5%BD%95%E5%B1%8F.mov",
+      video: "/清华国际展录屏.mov",
     },
     { 
       name: "tappal社交软件", 
