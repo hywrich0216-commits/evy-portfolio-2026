@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useScroll } from 'motion/react';
-import { ArrowUpRight, ArrowLeft, Home, Phone, MessageCircle, Instagram, Sparkles } from 'lucide-react';
+import { ArrowUpRight, ArrowLeft, Home, Phone, MessageCircle, Instagram, Sparkles, ChevronRight, Layers, Box, Settings, Search, CheckCircle2, AlertCircle, Info, Filter, MoreHorizontal } from 'lucide-react';
 
 // --- Components ---
 
@@ -679,8 +679,8 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       tags: ["DATA VISUALIZATION", "B-END TOOL"],
       zhDesc: "负责车辆感知数据可视化与 B 端工具链设计，解决海量数据下的实时渲染与分析效率问题。",
       enDesc: "Responsible for vehicle perception data visualization and B-end toolchain design, solving real-time rendering and analysis efficiency issues under massive data.",
-      image: "/BrowserDesktop.png",
-      video: "/Miviz可视化分析平台.mp4",
+      image: "/Browser Desktop.png",
+      video: "/屏幕录制2026-04-12 11.00.23.mov",
     },
     { 
       name: "清华天格计划项目", 
@@ -748,6 +748,23 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
 
 const ProjectDetail = ({ project, onBack }: { project: any, onBack: () => void }) => {
   const { scrollYProgress } = useScroll();
+  const isGridProject = project.name === "清华天格计划项目";
+  const isDesignSystem = project.name === "MIcar-B Design System";
+
+  // Data for GRID project simulation
+  const [coords, setCoords] = useState({ lat: 39.9042, lng: 116.4074 });
+  
+  useEffect(() => {
+    if (isGridProject) {
+      const interval = setInterval(() => {
+        setCoords(prev => ({
+          lat: prev.lat + (Math.random() - 0.5) * 0.01,
+          lng: prev.lng + (Math.random() - 0.5) * 0.01
+        }));
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [isGridProject]);
   
   // Fade-in-up variant
   const fadeInUp = {
@@ -801,32 +818,83 @@ const ProjectDetail = ({ project, onBack }: { project: any, onBack: () => void }
 
       {/* Hero Section */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-        <motion.div
-          initial={{ scale: 1.2, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 3, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center z-10 px-6"
-        >
-          <motion.span 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="text-[10px] font-mono text-[#49FFCC] tracking-[0.4em] uppercase mb-6 block"
+        {isGridProject ? (
+          <div className="relative w-full h-full max-w-[1400px] mx-auto px-6 md:px-12 flex flex-col items-center justify-center z-10 text-center">
+            {/* Centered Content */}
+            <motion.div 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col gap-4 items-center"
+            >
+              <div className="flex flex-col items-center">
+                <motion.span 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="text-[12px] font-mono text-[#49FFCC] tracking-[0.6em] uppercase mb-4"
+                >
+                  Project Reference 02
+                </motion.span>
+                <h1 className="text-[12vw] md:text-[8vw] font-light text-white font-misans tracking-tighter leading-none">
+                  GRID
+                </h1>
+                <p className="text-[14px] md:text-[18px] text-white/40 font-sans tracking-[0.2em] uppercase mt-2">
+                  Gamma-ray Burst Polarimeter
+                </p>
+              </div>
+
+              {/* Real-time Data Display */}
+              <div className="mt-12 flex flex-col gap-4 p-6 rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-md w-fit">
+                <div className="flex items-center gap-10">
+                  <div className="flex flex-col">
+                    <span className="text-[9px] font-mono text-white/20 uppercase tracking-widest mb-1">Longitude</span>
+                    <span className="text-[14px] font-mono text-[#49FFCC]">
+                      {coords.lng.toFixed(4)}° E
+                    </span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-[9px] font-mono text-white/20 uppercase tracking-widest mb-1">Latitude</span>
+                    <span className="text-[14px] font-mono text-[#49FFCC]">
+                      {coords.lat.toFixed(4)}° N
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 justify-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#49FFCC] animate-pulse" />
+                  <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">Signal Receiving...</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        ) : (
+          <motion.div
+            initial={{ scale: 1.2, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 3, ease: [0.22, 1, 0.36, 1] }}
+            className="text-center z-10 px-6"
           >
-            Project Case Study
-          </motion.span>
-          <h1 className="text-[6vw] md:text-[5vw] font-light text-white font-misans tracking-tighter leading-none mb-6">
-            {project.name}
-          </h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.4 }}
-            transition={{ delay: 1, duration: 1 }}
-            className="text-[14px] text-white font-sans tracking-[0.2em] uppercase"
-          >
-            {project.enName}
-          </motion.p>
-        </motion.div>
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 1 }}
+              className="text-[10px] font-mono text-[#49FFCC] tracking-[0.4em] uppercase mb-6 block"
+            >
+              Project Case Study
+            </motion.span>
+            <h1 className="text-[6vw] md:text-[5vw] font-light text-white font-misans tracking-tighter leading-none mb-6">
+              {project.name}
+            </h1>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              transition={{ delay: 1, duration: 1 }}
+              className="text-[14px] text-white font-sans tracking-[0.2em] uppercase"
+            >
+              {project.enName}
+            </motion.p>
+          </motion.div>
+        )}
         
         {/* Background Image with Slow Zoom */}
         <motion.div 
@@ -836,7 +904,7 @@ const ProjectDetail = ({ project, onBack }: { project: any, onBack: () => void }
           className="absolute inset-0 z-0"
         >
           <img 
-            src={project.image} 
+            src={isGridProject ? "/卫星图.png" : project.image} 
             alt="Hero Background" 
             className="w-full h-full object-cover opacity-20 grayscale"
           />
@@ -844,215 +912,440 @@ const ProjectDetail = ({ project, onBack }: { project: any, onBack: () => void }
         </motion.div>
       </section>
 
-      {/* Section 1: Overview (Large Typography) */}
+      {/* Section 1: Overview & Strategy */}
       <section className="min-h-screen w-full flex items-center justify-center px-6 md:px-24">
         <div className="max-w-[1000px] w-full">
           <motion.div {...fadeInUp} className="mb-12">
-            <span className="text-[10px] font-mono text-[#49FFCC] tracking-widest uppercase">01/ Overview</span>
+            <span className="text-[10px] font-mono text-[#49FFCC] tracking-widest uppercase">01/ Overview & Strategy</span>
           </motion.div>
-          <motion.h2 
-            {...fadeInUp}
-            className="text-[4vw] md:text-[3vw] font-light text-white font-misans leading-tight mb-12"
-          >
-            {project.zhDesc}
-          </motion.h2>
-          <motion.p 
-            {...fadeInUp}
-            className="text-[16px] text-white/40 font-sans leading-relaxed max-w-[800px]"
-          >
-            {project.enDesc}
-          </motion.p>
+          
+          {isDesignSystem ? (
+            <>
+              <motion.h2 
+                {...fadeInUp}
+                className="text-[4vw] md:text-[2.5vw] font-light text-white font-misans leading-tight mb-12"
+              >
+                MIcar-B Design System 是小米汽车内部 B 端仿真与工具平台的设计基础设施。我们不仅仅是在做“视觉美化”，而是在构建一套能够应对<span className="text-[#49FFCC]">业务高复杂度</span>与<span className="text-[#49FFCC]">大规模团队协作</span>的界面底座。
+              </motion.h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <motion.div {...fadeInUp} className="space-y-4">
+                  <h4 className="text-[14px] font-mono text-[#49FFCC] tracking-widest uppercase">核心痛点</h4>
+                  <p className="text-[14px] text-white/50 leading-relaxed">
+                    随着业务快速扩张，不同模块间风格失控，研发与设计的协作模式存在断层，复杂仿真场景下缺乏可复用的高质量资产。
+                  </p>
+                </motion.div>
+                <motion.div {...fadeInUp} className="space-y-4">
+                  <h4 className="text-[14px] font-mono text-[#49FFCC] tracking-widest uppercase">设计目标</h4>
+                  <p className="text-[14px] text-white/50 leading-relaxed">
+                    建立统一度极高的<strong>原子化设计</strong>体系，通过严格的<strong>状态机定义</strong>降低用户的认知负载，确保在高密度信息展示下的极致专业感。
+                  </p>
+                </motion.div>
+              </div>
+            </>
+          ) : (
+            <>
+              <motion.h2 
+                {...fadeInUp}
+                className="text-[4vw] md:text-[3vw] font-light text-white font-misans leading-tight mb-12"
+              >
+                {project.zhDesc}
+              </motion.h2>
+              <motion.p 
+                {...fadeInUp}
+                className="text-[16px] text-white/40 font-sans leading-relaxed max-w-[800px]"
+              >
+                {project.enDesc}
+              </motion.p>
+            </>
+          )}
         </div>
       </section>
 
-      {/* Section 2: Problem Definition (Typography as Visual) */}
-      <section className="min-h-screen w-full flex items-center justify-center px-6 md:px-24 bg-neutral-950/30">
-        <div className="max-w-[1200px] w-full grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
-          <div className="relative">
-            <motion.div {...fadeInUp}>
-              <span className="text-[10px] font-mono text-[#49FFCC] tracking-widest uppercase block mb-8">02/ Problem Definition</span>
-              <h3 className="text-[3vw] font-light text-white font-misans leading-tight mb-8">
-                如何在复杂仿真系统中，<br/>
-                <span className="text-[#49FFCC]">降低用户的理解与使用成本？</span>
-              </h3>
-              <p className="text-[14px] text-white/50 font-sans leading-relaxed">
-                In complex simulation systems, how to reduce the understanding and usage costs for users?
-              </p>
-            </motion.div>
-          </div>
-          <div className="flex flex-col gap-12">
+      {/* Section 2: Architecture / 组件库架构 */}
+      <section className="min-h-screen w-full flex flex-col items-center justify-center px-6 md:px-24 bg-neutral-950/30 py-40">
+        <motion.div {...fadeInUp} className="max-w-[1200px] w-full text-center mb-24">
+          <span className="text-[10px] font-mono text-[#49FFCC] tracking-widest uppercase block mb-4">02/ Component Architecture</span>
+          <h3 className="text-[3vw] md:text-[2.5vw] font-light text-white font-misans">
+            {isDesignSystem ? "基于原子化理念的阶梯式架构" : "如何在复杂仿真系统中，降低用户的成本？"}
+          </h3>
+        </motion.div>
+
+        {isDesignSystem ? (
+          <div className="max-w-[1200px] w-full grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
-              { title: "数据分散", desc: "分析入口多，起点不统一" },
-              { title: "路径冗长", desc: "依赖手动配置分析环境" },
-              { title: "认知负担高", desc: "功能按结构组织，难以理解" }
-            ].map((item, i) => (
-              <motion.div 
+              { 
+                level: "Foundation", 
+                zh: "基础层", 
+                items: ["颜色 (Colors)", "字体 (Typography)", "间距 (Spacing)", "栅格 (Grid)"],
+                icon: <Sparkles className="w-5 h-5 text-[#49FFCC]" />
+              },
+              { 
+                level: "Components", 
+                zh: "原子组件层", 
+                items: ["Button", "Input", "Table", "Pagination", "Select"],
+                icon: <Box className="w-5 h-5 text-[#49FFCC]" />
+              },
+              { 
+                level: "Patterns", 
+                zh: "模式层", 
+                items: ["筛选区 (Filter Bar)", "详情页结构", "批量操作区"],
+                icon: <Layers className="w-5 h-5 text-[#49FFCC]" />
+              },
+              { 
+                level: "Rules", 
+                zh: "规则层", 
+                items: ["交互反馈 (Feedback)", "响应式策略", "状态机定义"],
+                icon: <Settings className="w-5 h-5 text-[#49FFCC]" />
+              }
+            ].map((layer, i) => (
+              <motion.div
                 key={i}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.2 }}
-                className="flex items-start gap-6 group"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                className="p-8 rounded-3xl border border-white/5 bg-white/[0.02] backdrop-blur-xl group hover:bg-white/[0.05] transition-all"
               >
-                <span className="text-[12px] font-mono text-[#49FFCC]/50 group-hover:text-[#49FFCC] transition-colors">0{i+1}</span>
-                <div>
-                  <h4 className="text-[18px] text-white font-misans mb-1">{item.title}</h4>
-                  <p className="text-[12px] text-white/40 font-sans leading-relaxed">{item.desc}</p>
+                <div className="mb-6 opacity-60 group-hover:opacity-100 transition-opacity">
+                  {layer.icon}
                 </div>
+                <h4 className="text-[11px] font-mono text-[#49FFCC] tracking-widest uppercase mb-2">{layer.level}</h4>
+                <h5 className="text-[18px] text-white font-misans mb-6">{layer.zh}</h5>
+                <ul className="space-y-3">
+                  {layer.items.map((item, idx) => (
+                    <li key={idx} className="text-[12px] text-white/30 flex items-center gap-2">
+                      <div className="w-1 h-1 rounded-full bg-[#49FFCC]/40" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </motion.div>
             ))}
           </div>
-        </div>
+        ) : (
+          <div className="max-w-[1200px] w-full grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
+            <div className="relative">
+              <motion.div {...fadeInUp}>
+                <h3 className="text-[3vw] font-light text-white font-misans leading-tight mb-8">
+                  如何在复杂仿真系统中，<br/>
+                  <span className="text-[#49FFCC]">降低用户的理解与使用成本？</span>
+                </h3>
+                <p className="text-[14px] text-white/50 font-sans leading-relaxed">
+                  In complex simulation systems, how to reduce the understanding and usage costs for users?
+                </p>
+              </motion.div>
+            </div>
+            <div className="flex flex-col gap-12">
+              {[
+                { title: "数据分散", desc: "分析入口多，起点不统一" },
+                { title: "路径冗长", desc: "依赖手动配置分析环境" },
+                { title: "认知负担高", desc: "功能按结构组织，难以理解" }
+              ].map((item, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.2 }}
+                  className="flex items-start gap-6 group"
+                >
+                  <span className="text-[12px] font-mono text-[#49FFCC]/50 group-hover:text-[#49FFCC] transition-colors">0{i+1}</span>
+                  <div>
+                    <h4 className="text-[18px] text-white font-misans mb-1">{item.title}</h4>
+                    <p className="text-[12px] text-white/40 font-sans leading-relaxed">{item.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
-      {/* Section 3: Analysis Flow Comparison (Traditional vs. Optimized) */}
+      {/* Section 3: Core Component Depth (Table) */}
       <section className="min-h-screen w-full flex flex-col items-center justify-center px-6 md:px-24 py-40">
-        <motion.div {...fadeInUp} className="text-center mb-24">
-          <span className="text-[10px] font-mono text-[#49FFCC] tracking-widest uppercase block mb-4">03/ Analysis Flow Comparison</span>
-          <h3 className="text-[2.5vw] font-light text-white font-misans">传统路径 vs 意图驱动路径</h3>
+        <motion.div {...fadeInUp} className="max-w-[1200px] w-full text-center mb-24">
+          <span className="text-[10px] font-mono text-[#49FFCC] tracking-widest uppercase block mb-4">03/ Core Component Deep Dive</span>
+          <h3 className="text-[3vw] md:text-[2.5vw] font-light text-white font-misans">
+            {isDesignSystem ? "以 Table 为例：高密度数据治理" : "传统路径 vs 意图驱动路径"}
+          </h3>
+        </motion.div>
+
+        {isDesignSystem ? (
+          <div className="max-w-[1200px] w-full grid grid-cols-1 md:grid-cols-12 gap-12">
+            <div className="md:col-span-4 space-y-12">
+              <motion.div {...fadeInUp} className="space-y-4">
+                <h4 className="text-[14px] text-white font-misans flex items-center gap-2">
+                   <div className="w-1 h-1 rounded-full bg-[#49FFCC]" />
+                   组件目标
+                </h4>
+                <p className="text-[12px] text-white/40 leading-relaxed">
+                  解决海量、动态、高维度数据的清晰呈现。在最小的空间内提供最高效率的阅读体验与操作响应。
+                </p>
+              </motion.div>
+              <motion.div {...fadeInUp} className="space-y-4">
+                <h4 className="text-[14px] text-white font-misans flex items-center gap-2">
+                   <div className="w-1 h-1 rounded-full bg-[#49FFCC]" />
+                   结构拆分
+                </h4>
+                <div className="grid grid-cols-2 gap-4">
+                  {["表头 (Header)", "数据区 (Body)", "操作列", "统计汇总"].map((t) => (
+                    <div key={t} className="px-3 py-2 border border-white/10 rounded-lg text-[11px] text-white/30 text-center">
+                      {t}
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+              <motion.div {...fadeInUp} className="p-6 rounded-2xl bg-white/[0.03] border border-white/5 space-y-4">
+                <h4 className="text-[13px] text-[#49FFCC] font-mono tracking-widest uppercase">研发建议</h4>
+                <p className="text-[11px] text-white/40 leading-relaxed">
+                  • 使用 Flex 布局确保列宽自适应<br/>
+                  • 万级以上数据建议引入虚拟列表 (Virtual List)<br/>
+                  • 结合 CSS transform 提升 Hover 行的性能
+                </p>
+              </motion.div>
+            </div>
+
+            <div className="md:col-span-8">
+              <motion.div 
+                {...fadeInUp}
+                className="p-1 rounded-3xl border border-white/10 bg-neutral-900/40 relative group overflow-hidden"
+              >
+                <div className="p-10 space-y-8">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-[13px] text-white/80 font-misans">交互状态定义 / Interaction States</h4>
+                      <div className="flex gap-2">
+                        <div className="px-2 py-1 bg-white/5 border border-white/10 rounded text-[9px] text-white/40">Default</div>
+                        <div className="px-2 py-1 bg-[#49FFCC]/10 border border-[#49FFCC]/20 rounded text-[9px] text-[#49FFCC]">Active</div>
+                      </div>
+                    </div>
+                    <div className="w-full border border-white/5 rounded-xl overflow-hidden text-[11px]">
+                      <div className="grid grid-cols-4 bg-white/5 border-b border-white/5 p-3 text-white/40 uppercase tracking-widest">
+                        <span>Metric</span>
+                        <span>Value</span>
+                        <span>Delta</span>
+                        <span>Action</span>
+                      </div>
+                      {[1, 2, 3].map((row) => (
+                        <div key={row} className="grid grid-cols-4 p-3 border-b border-white/5 items-center hover:bg-white/[0.02] transition-colors">
+                          <span className="text-white/60">Throttle Pos</span>
+                          <span className="font-mono text-white/80">85.4%</span>
+                          <span className="text-[#49FFCC]/60">+2.1%</span>
+                          <div className="flex gap-2">
+                             <MoreHorizontal size={14} className="text-white/20" />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-8 pt-8 border-t border-white/5">
+                    <div className="space-y-4">
+                      <h5 className="text-[11px] text-[#49FFCC] uppercase tracking-widest opacity-60">业务模式：处理机制</h5>
+                      <div className="space-y-2">
+                        <div className="text-[11px] text-white/30">• 长文本溢出：省略号 + Tooltip 提示</div>
+                        <div className="text-[11px] text-white/30">• 加载中：局部 Skeleton 或者 全局 Loading</div>
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <h5 className="text-[11px] text-[#49FFCC] uppercase tracking-widest opacity-60">筛选与反馈</h5>
+                      <div className="space-y-2">
+                        <div className="text-[11px] text-white/30">• 排序按钮状态即时反馈</div>
+                        <div className="text-[11px] text-white/30">• 空状态：明确的占位说明与操作入口</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        ) : (
+          <div className="relative w-full max-w-[1200px] grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0">
+            {/* Vertical Divider */}
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[1px] bg-white/5 -translate-x-1/2" />
+
+            {/* Left: Traditional Flow */}
+            <div className="flex flex-col items-center px-4 md:px-12">
+              <motion.h4 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 0.3 }}
+                className="text-[14px] font-mono tracking-[0.3em] uppercase mb-12 text-white"
+              >
+                Traditional Flow
+              </motion.h4>
+              
+              <div className="flex flex-col items-center gap-4 w-full">
+                {[
+                  "用户打开数据",
+                  "理解数据结构 (Channel/Topic)",
+                  "手动创建 Layout",
+                  "添加多个 Panel",
+                  "手动调整参数",
+                  "开始分析"
+                ].map((step, i) => (
+                  <React.Fragment key={i}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      className="w-full p-4 rounded-xl border border-white/5 bg-white/[0.02] text-center"
+                    >
+                      <span className="text-[13px] text-white/40 font-misans">{step}</span>
+                    </motion.div>
+                    {i < 5 && (
+                      <motion.div 
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 0.2 }}
+                        className="h-4 w-[1px] bg-white" 
+                      />
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+
+              <motion.div 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                className="mt-12 pt-8 border-t border-white/5 w-full text-center"
+              >
+                <ul className="text-[11px] font-mono text-white/20 space-y-2 uppercase tracking-widest">
+                  <li>• 步骤繁琐 / Complex Steps</li>
+                  <li>• 学习成本高 / High Learning Cost</li>
+                  <li>• 依赖经验 / Experience Dependent</li>
+                </ul>
+              </motion.div>
+            </div>
+
+            {/* Right: Optimized Flow */}
+            <div className="flex flex-col items-center px-4 md:px-12">
+              <motion.h4 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                className="text-[14px] font-mono tracking-[0.3em] uppercase mb-12 text-[#49FFCC]"
+              >
+                Optimized Flow
+              </motion.h4>
+              
+              <div className="flex flex-col items-center gap-4 w-full relative">
+                {[
+                  { text: "用户输入意图 (User Intent)", highlight: true },
+                  { text: "AI 解析分析需求", ai: true },
+                  { text: "调用 Skill 能力", ai: true },
+                  { text: "自动生成 Layout", highlight: true },
+                  { text: "自动配置 Panel", highlight: true },
+                  { text: "输出分析结果", highlight: true }
+                ].map((step, i) => (
+                  <React.Fragment key={i}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      className={`w-full p-5 rounded-2xl border backdrop-blur-md transition-all duration-500 ${
+                        step.ai 
+                          ? "border-[#49FFCC]/30 bg-[#49FFCC]/5 shadow-[0_0_20px_rgba(73,255,204,0.05)]" 
+                          : "border-white/10 bg-white/5"
+                      } text-center group hover:border-[#49FFCC]/50`}
+                    >
+                      <span className={`text-[14px] font-misans ${step.ai ? "text-[#49FFCC]" : "text-white/90"}`}>
+                        {step.text}
+                      </span>
+                    </motion.div>
+                    {i < 5 && (
+                      <motion.div 
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 0.5 }}
+                        className="h-4 w-[1px] bg-[#49FFCC]/30" 
+                      />
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+
+              <motion.div 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                className="mt-12 pt-8 border-t border-[#49FFCC]/10 w-full text-center"
+              >
+                <ul className="text-[11px] font-mono text-[#49FFCC]/60 space-y-2 uppercase tracking-widest">
+                  <li>• 极简路径 / Minimal Path</li>
+                  <li>• 零门槛 / Zero Barrier</li>
+                  <li>• 意图驱动 / Intent Driven</li>
+                </ul>
+              </motion.div>
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* Section 4: Design Strategy / Prototype */}
+      <section className="min-h-screen w-full flex flex-col items-center justify-center px-6 md:px-24 bg-neutral-950/30 py-40">
+        <motion.div {...fadeInUp} className="max-w-[1200px] w-full text-center mb-24">
+          <span className="text-[10px] font-mono text-[#49FFCC] tracking-widest uppercase block mb-4">04/ Standard Layout Prototype</span>
+          <h3 className="text-[3vw] md:text-[2.5vw] font-light text-white font-misans">
+            {isDesignSystem ? "筛选查询型页面原型" : "从高频场景中提炼分析能力"}
+          </h3>
         </motion.div>
         
-        <div className="relative w-full max-w-[1200px] grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0">
-          {/* Vertical Divider */}
-          <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-[1px] bg-white/5 -translate-x-1/2" />
-
-          {/* Left: Traditional Flow */}
-          <div className="flex flex-col items-center px-4 md:px-12">
-            <motion.h4 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 0.3 }}
-              className="text-[14px] font-mono tracking-[0.3em] uppercase mb-12 text-white"
-            >
-              Traditional Flow
-            </motion.h4>
-            
-            <div className="flex flex-col items-center gap-4 w-full">
-              {[
-                "用户打开数据",
-                "理解数据结构 (Channel/Topic)",
-                "手动创建 Layout",
-                "添加多个 Panel",
-                "手动调整参数",
-                "开始分析"
-              ].map((step, i) => (
-                <React.Fragment key={i}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    className="w-full p-4 rounded-xl border border-white/5 bg-white/[0.02] text-center"
-                  >
-                    <span className="text-[13px] text-white/40 font-misans">{step}</span>
-                  </motion.div>
-                  {i < 5 && (
-                    <motion.div 
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 0.2 }}
-                      className="h-4 w-[1px] bg-white" 
-                    />
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-
-            <motion.div 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              className="mt-12 pt-8 border-t border-white/5 w-full text-center"
-            >
-              <ul className="text-[11px] font-mono text-white/20 space-y-2 uppercase tracking-widest">
-                <li>• 步骤繁琐 / Complex Steps</li>
-                <li>• 学习成本高 / High Learning Cost</li>
-                <li>• 依赖经验 / Experience Dependent</li>
-              </ul>
-            </motion.div>
-          </div>
-
-          {/* Right: Optimized Flow */}
-          <div className="flex flex-col items-center px-4 md:px-12">
-            <motion.h4 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              className="text-[14px] font-mono tracking-[0.3em] uppercase mb-12 text-[#49FFCC]"
-            >
-              Optimized Flow
-            </motion.h4>
-            
-            <div className="flex flex-col items-center gap-4 w-full relative">
-              {[
-                { text: "用户输入意图 (User Intent)", highlight: true },
-                { text: "AI 解析分析需求", ai: true },
-                { text: "调用 Skill 能力", ai: true },
-                { text: "自动生成 Layout", highlight: true },
-                { text: "自动配置 Panel", highlight: true },
-                { text: "输出分析结果", highlight: true }
-              ].map((step, i) => (
-                <React.Fragment key={i}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    className={`w-full p-5 rounded-2xl border backdrop-blur-md transition-all duration-500 ${
-                      step.ai 
-                        ? "border-[#49FFCC]/30 bg-[#49FFCC]/5 shadow-[0_0_20px_rgba(73,255,204,0.05)]" 
-                        : "border-white/10 bg-white/5"
-                    } text-center group hover:border-[#49FFCC]/50`}
-                  >
-                    <span className={`text-[14px] font-misans ${step.ai ? "text-[#49FFCC]" : "text-white/90"}`}>
-                      {step.text}
-                    </span>
-                    {step.ai && i === 1 && (
-                      <div className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 hidden lg:block">
-                        <div className="flex flex-col items-start gap-1 border-l border-[#49FFCC]/20 pl-4">
-                          <span className="text-[9px] font-mono text-[#49FFCC]/40 uppercase tracking-tighter">AI Processing Layer</span>
-                          <span className="text-[10px] font-mono text-[#49FFCC]/60 whitespace-nowrap">解析 → 调用 → 编排 → 输出</span>
+        {isDesignSystem ? (
+          <motion.div 
+            {...fadeInUp}
+            className="w-full max-w-6xl rounded-[40px] border border-white/10 bg-[#111] overflow-hidden shadow-2xl relative"
+          >
+             {/* Admin Mockup */}
+             <div className="flex h-[600px]">
+                <div className="w-20 border-r border-white/5 flex flex-col items-center py-10 gap-8 opacity-40">
+                   <div className="w-10 h-10 rounded-xl bg-white/10" />
+                   <div className="w-8 h-8 rounded-lg bg-white/5" />
+                   <div className="w-8 h-8 rounded-lg bg-white/5" />
+                </div>
+                <div className="flex-1 flex flex-col">
+                   <div className="px-10 py-8 border-b border-white/5 flex items-center justify-between">
+                      <div>
+                        <div className="flex items-center gap-2 text-[10px] text-white/20 uppercase tracking-[0.2em] mb-2">
+                           <span>Simulation</span>
+                           <ChevronRight size={10} />
+                           <span className="text-white/40">Cloud Manager</span>
                         </div>
+                        <h2 className="text-[22px] text-white font-misans">仿真任务管理 / Simulation Manager</h2>
                       </div>
-                    )}
-                  </motion.div>
-                  {i < 5 && (
-                    <motion.div 
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 0.5 }}
-                      className="h-4 w-[1px] bg-[#49FFCC]/30" 
-                    />
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-
-            <motion.div 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              className="mt-12 pt-8 border-t border-[#49FFCC]/10 w-full text-center"
-            >
-              <ul className="text-[11px] font-mono text-[#49FFCC]/60 space-y-2 uppercase tracking-widest">
-                <li>• 极简路径 / Minimal Path</li>
-                <li>• 零门槛 / Zero Barrier</li>
-                <li>• 意图驱动 / Intent Driven</li>
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="mt-32 px-8 py-4 rounded-full border border-white/5 bg-white/[0.02] backdrop-blur-sm"
-        >
-          <p className="text-[12px] font-misans text-white/40 tracking-widest">
-            分析路径由多步配置，简化为 <span className="text-[#49FFCC]">意图驱动</span>
-          </p>
-        </motion.div>
-      </section>
-
-      {/* Section 4: Design Strategy (Glassmorphism Cards) */}
-      <section className="min-h-screen w-full flex items-center justify-center px-6 md:px-24 bg-neutral-950/30">
-        <div className="max-w-[1200px] w-full">
-          <motion.div {...fadeInUp} className="mb-24">
-            <span className="text-[10px] font-mono text-[#49FFCC] tracking-widest uppercase block mb-4">04/ Design Strategy</span>
-            <h3 className="text-[3vw] font-light text-white font-misans">从高频场景中提炼分析能力，构建可复用的AI Skill体系</h3>
+                      <button className="px-4 py-2 bg-[#49FFCC] text-black text-[12px] font-bold rounded-lg">+ 新建任务</button>
+                   </div>
+                   <div className="px-10 py-6 border-b border-white/5 bg-white/[0.01] flex items-center gap-4">
+                      <div className="flex items-center gap-2 px-3 py-1.5 border border-white/10 rounded-lg text-[11px] text-white/40 bg-white/[0.02]">
+                         <Filter size={12} /> 状态: 全部
+                      </div>
+                      <div className="flex items-center gap-2 px-3 py-1.5 border border-white/10 rounded-lg text-[11px] text-white/40 bg-white/[0.02]">
+                         创建人: Evy
+                      </div>
+                      <div className="flex-1" />
+                      <div className="relative">
+                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/20" />
+                         <input readOnly placeholder="搜索..." className="bg-white/5 border border-white/10 rounded-lg py-1.5 pl-9 pr-4 text-[11px] text-white/40 w-48" />
+                      </div>
+                   </div>
+                   <div className="flex-1 p-8">
+                      <div className="w-full h-full border border-white/5 rounded-2xl bg-neutral-900/20 overflow-hidden">
+                         <div className="grid grid-cols-5 bg-white/5 p-4 text-[10px] text-white/20 uppercase tracking-widest font-bold">
+                            <span>Task ID</span>
+                            <span>Name</span>
+                            <span>Status</span>
+                            <span>Progress</span>
+                            <span className="text-right">Actions</span>
+                         </div>
+                         {[1, 2, 3].map(i => (
+                            <div key={i} className="grid grid-cols-5 p-4 border-b border-white/5 items-center text-[12px]">
+                               <span className="font-mono text-white/20">SIM-2024-0{i}</span>
+                               <span className="text-white/80">SU7_Urban_Test_0{i}</span>
+                               <span><div className="inline-block px-2 py-0.5 rounded-full bg-[#49FFCC]/10 text-[#49FFCC] text-[10px]">Running</div></span>
+                               <div className="w-24 h-1 bg-white/5 rounded-full overflow-hidden"><div className="w-2/3 h-full bg-[#49FFCC]" /></div>
+                               <div className="text-right text-white/20">Edit / More</div>
+                            </div>
+                         ))}
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#49FFCC]/5 blur-[150px] -z-10" />
           </motion.div>
-          
+        ) : (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { title: "从“功能集合”到“能力体系”", desc: "将分散的工具功能抽象为可复用的分析能力（Skill），降低用户理解成本。", en: "From Functions to Capabilities" },
@@ -1075,7 +1368,7 @@ const ProjectDetail = ({ project, onBack }: { project: any, onBack: () => void }
               </motion.div>
             ))}
           </div>
-        </div>
+        )}
       </section>
 
       {/* Section 5: Key Design (Sticky Layout) */}
@@ -1134,6 +1427,44 @@ const ProjectDetail = ({ project, onBack }: { project: any, onBack: () => void }
           Back to Gallery
         </motion.button>
       </section>
+    </div>
+  );
+};
+
+const Hotspot = ({ x, y, title, desc }: { x: string, y: string, title: string, desc: string }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  return (
+    <div 
+      className="absolute z-20" 
+      style={{ left: x, top: y }}
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      <div className="relative flex items-center justify-center">
+        {/* Breathing Animation */}
+        <motion.div 
+          animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0.2, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute w-8 h-8 rounded-full bg-[#49FFCC]"
+        />
+        <div className="relative w-3 h-3 rounded-full bg-[#49FFCC] border-2 border-white shadow-[0_0_10px_rgba(73,255,204,1)] cursor-pointer" />
+        
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 10 }}
+              className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 w-[220px] p-4 rounded-xl border border-white/10 bg-[#0A0A0A]/90 backdrop-blur-xl shadow-2xl pointer-events-none"
+            >
+              <h4 className="text-[13px] font-misans text-[#49FFCC] mb-1 uppercase tracking-wider">{title}</h4>
+              <p className="text-[11px] text-white/60 font-sans leading-relaxed">{desc}</p>
+              <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-[#0A0A0A]/90" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
