@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useScroll } from 'motion/react';
-import { ArrowUpRight, ArrowLeft, Home, Phone, MessageCircle, Instagram, Sparkles, ChevronRight, Layers, Box, Settings, Search, CheckCircle2, AlertCircle, Info, Filter, MoreHorizontal } from 'lucide-react';
+import { ArrowUpRight, ArrowLeft, Home, Phone, MessageCircle, Instagram, Sparkles, ChevronRight, Layers, Box, Settings, Search, CheckCircle2, AlertCircle, Info, Filter, MoreHorizontal, MapPin, Mail, Globe } from 'lucide-react';
 
 // --- Components ---
 
@@ -25,8 +25,16 @@ const Header = ({ scrolled }: { scrolled: boolean }) => {
   });
 
   return (
-    <header className={`fixed top-0 left-0 w-full h-[80px] z-[999] flex items-center justify-between px-12 transition-all duration-700 ease-in-out
-      ${scrolled ? 'header-glass glass-morphism' : 'bg-transparent border-transparent'}`}>
+    <header 
+      className={`fixed top-0 left-0 w-full h-[80px] z-[999] flex items-center justify-between px-12 transition-all duration-700 ease-in-out`}
+      style={{
+        background: scrolled ? 'rgba(187, 187, 188, 0.12)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(12px) saturate(180%)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(12px) saturate(180%)' : 'none',
+        border: 'none',
+        boxShadow: 'none'
+      }}
+    >
       
       <div className="text-white font-sans text-sm tracking-[0.2em] flex items-center">
         EVY® <span className="mx-4 opacity-20">/</span> <span className="opacity-60">INTERACTION DESIGNER</span>
@@ -40,14 +48,11 @@ const Header = ({ scrolled }: { scrolled: boolean }) => {
 };
 
 const BottomNav = ({ activeTab, setActiveTab }: { activeTab: string, setActiveTab: (tab: string) => void }) => {
-  const tabs = ['PROJECT', 'ABOUT', 'CONTACT'];
+  const tabs = ['PROJECT', 'ABOUT'];
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
-    if (tab === 'CONTACT') {
-      const contactSection = document.getElementById('contact-section');
-      contactSection?.scrollIntoView({ behavior: 'smooth' });
-    } else if (tab === 'PROJECT') {
+    if (tab === 'PROJECT') {
       const gallerySection = document.getElementById('gallery-section');
       gallerySection?.scrollIntoView({ behavior: 'smooth' });
     } else if (tab === 'ABOUT') {
@@ -57,281 +62,75 @@ const BottomNav = ({ activeTab, setActiveTab }: { activeTab: string, setActiveTa
   };
 
   return (
-    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[1000]">
-      <nav className="h-[56px] px-[6px] py-[4px] rounded-[30px] flex items-center gap-1 bg-[rgba(15,15,15,0.5)] backdrop-blur-[24px] saturate-[180%] -webkit-backdrop-blur-[24px] shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_0_0_1px_rgba(255,255,255,0.08),inset_0_8px_16px_-4px_rgba(255,255,255,0.04),inset_0_-8px_16px_-4px_rgba(255,255,255,0.02)] border border-white/[0.03]">
+    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[1000]">      <nav 
+        className="relative flex items-center justify-center gap-[3px] w-[220px] h-[36px] p-[3px] rounded-full overflow-hidden"
+        style={{
+          '--dock-glass': 'rgb(187, 187, 188)',
+          '--dock-light': 'rgb(255, 255, 255)',
+          '--dock-dark': 'rgb(0, 0, 0)',
+          '--dock-reflex-light': '1',
+          '--dock-reflex-dark': '1',
+          background: 'rgba(187, 187, 188, 0.12)',
+          backdropFilter: 'blur(12px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(12px) saturate(180%)',
+          boxShadow: `
+            inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+            inset 2px 3px 0 -2px rgba(255, 255, 255, 0.4),
+            inset -2px -2px 0 -2px rgba(255, 255, 255, 0.3),
+            inset -3px -8px 1px -6px rgba(255, 255, 255, 0.2),
+            inset -0.3px -1px 4px 0 rgba(0, 0, 0, 0.15),
+            inset -1.5px 2.5px 0 -2px rgba(0, 0, 0, 0.2),
+            inset 0 3px 4px -2px rgba(0, 0, 0, 0.2),
+            0 1px 4px rgba(0, 0, 0, 0.2),
+            0 8px 24px rgba(0, 0, 0, 0.3)
+          `
+        } as React.CSSProperties}
+      >
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => handleTabClick(tab)}
-            className={`relative h-full px-6 flex flex-col items-center justify-center transition-all duration-300 group ${
-              activeTab === tab ? 'text-white' : 'text-white/40 hover:text-white'
+            className={`relative flex-1 h-full flex flex-col items-center justify-center transition-all duration-300 group ${
+              activeTab === tab ? 'text-white' : 'text-[#777777] hover:text-white/60'
             }`}
           >
             {/* Active Background */}
-            <AnimatePresence>
-              {activeTab === tab && (
-                <motion.div
-                  layoutId="nav-active-bg"
-                  className="absolute inset-0 bg-white/[0.08] rounded-[26px] -z-10"
-                  transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                />
-              )}
-            </AnimatePresence>
+            {activeTab === tab && (
+              <motion.div
+                layoutId="nav-active-bg"
+                className="absolute inset-0 rounded-full -z-10"
+                style={{
+                  borderRadius: '99em',
+                  backgroundColor: 'color-mix(in srgb, var(--dock-glass) 36%, transparent)',
+                  boxShadow: `
+                    inset 0 0 0 1px color-mix(in srgb, var(--dock-light) calc(var(--dock-reflex-light) * 10%), transparent),
+                    inset 2px 1px 0 -1px color-mix(in srgb, var(--dock-light) calc(var(--dock-reflex-light) * 90%), transparent),
+                    inset -1.5px -1px 0 -1px color-mix(in srgb, var(--dock-light) calc(var(--dock-reflex-light) * 80%), transparent),
+                    inset -2px -6px 1px -5px color-mix(in srgb, var(--dock-light) calc(var(--dock-reflex-light) * 60%), transparent),
+                    inset -1px 2px 3px -1px color-mix(in srgb, var(--dock-dark) calc(var(--dock-reflex-dark) * 20%), transparent),
+                    inset 0 -4px 1px -2px color-mix(in srgb, var(--dock-dark) calc(var(--dock-reflex-dark) * 10%), transparent),
+                    0 3px 6px color-mix(in srgb, var(--dock-dark) calc(var(--dock-reflex-dark) * 8%), transparent)
+                  `,
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
+                }}
+                transition={{ 
+                  type: "tween",
+                  ease: [1, 0, 0.4, 1],
+                  duration: 0.4
+                }}
+              />
+            )}
 
             <div className="relative">
-              <span className="text-[13px] font-medium font-sans tracking-[0.03em] uppercase">
+              <span className="text-[10px] font-medium font-misans tracking-[0.03em] uppercase">
                 {tab}
               </span>
-
-              {/* Active Spectrum Glow Dot (Top Right) */}
-              <AnimatePresence>
-                {activeTab === tab && (
-                  <motion.div
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0, opacity: 0 }}
-                    className="absolute -top-1 -right-2 w-1.5 h-1.5 rounded-full blur-[1px]"
-                    style={{
-                      background: 'linear-gradient(135deg, #FF5032, #00FFFF, #0000FF)',
-                      boxShadow: '0 0 8px rgba(0, 255, 255, 0.8)',
-                    }}
-                  />
-                )}
-              </AnimatePresence>
             </div>
           </button>
         ))}
       </nav>
     </div>
-  );
-};
-
-const EmailModule = () => {
-  const email = "hywrich0216@gmail.com";
-  const [displayText, setDisplayText] = useState(email);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [showTooltip, setShowTooltip] = useState(false);
-  const containerRef = React.useRef<HTMLDivElement>(null);
-
-  // Text Decoding Effect
-  useEffect(() => {
-    if (isHovered) {
-      let iteration = 0;
-      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@.";
-      const interval = setInterval(() => {
-        setDisplayText(prev => 
-          prev.split("").map((_, index) => {
-            if (index < iteration) return email[index];
-            return letters[Math.floor(Math.random() * letters.length)];
-          }).join("")
-        );
-        
-        if (iteration >= email.length) clearInterval(interval);
-        iteration += 1 / 3;
-      }, 30);
-      return () => clearInterval(interval);
-    } else {
-      setDisplayText(email);
-    }
-  }, [isHovered]);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-    }
-  };
-
-  const handleClick = () => {
-    navigator.clipboard.writeText(email);
-    setIsClicked(true);
-    setShowTooltip(true);
-    setTimeout(() => {
-      setIsClicked(false);
-      setShowTooltip(false);
-    }, 2000);
-  };
-
-  return (
-    <div 
-      ref={containerRef}
-      className="flex flex-col gap-4 items-start cursor-none relative group w-fit"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onMouseMove={handleMouseMove}
-      onClick={handleClick}
-    >
-      {/* Custom Cursor */}
-      <motion.div
-        className="pointer-events-none absolute z-50 w-8 h-8 border border-[#FFB347] rounded-full flex items-center justify-center"
-        animate={{ 
-          x: mousePos.x - 16, 
-          y: mousePos.y - 16,
-          opacity: isHovered ? 1 : 0,
-          scale: isHovered ? 1 : 0.5
-        }}
-        transition={{ type: "spring", damping: 20, stiffness: 250, mass: 0.5 }}
-      />
-
-      {/* Tooltip */}
-      <AnimatePresence>
-        {showTooltip && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: -10 }}
-            animate={{ opacity: 1, scale: 1, y: -40 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            style={{ left: mousePos.x }}
-            className="absolute z-[1001] px-4 py-2 glass-morphism border border-[#FFB347]/20 rounded-lg whitespace-nowrap pointer-events-none"
-          >
-            <span className="text-[10px] text-white/60 font-sans tracking-widest uppercase">
-              COPIED TO CLIPBOARD
-            </span>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Label */}
-      <div className="h-4 overflow-hidden">
-        <motion.span 
-          className="text-[12px] text-white/30 font-sans font-light tracking-[0.2em] uppercase block"
-          animate={{ y: isHovered ? -20 : 0 }}
-          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        >
-          EMAIL
-        </motion.span>
-        <motion.span 
-          className="text-[12px] text-white/40 font-sans font-light tracking-[0.2em] uppercase block"
-          animate={{ y: isHovered ? -20 : 0 }}
-          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        >
-          CLICK TO COPY
-        </motion.span>
-      </div>
-
-      {/* Email Address */}
-      <div className="relative">
-        <motion.span 
-          className={`text-[14px] font-light font-sans transition-colors duration-300 ${
-            isClicked ? 'text-white/80' : isHovered ? 'text-white/60' : 'text-white/40'
-          }`}
-        >
-          {displayText}
-        </motion.span>
-      </div>
-    </div>
-  );
-};
-
-const ContactSection = () => {
-  const [hoveredIcon, setHoveredIcon] = useState<number | null>(null);
-  const [copiedIcon, setCopiedIcon] = useState<number | null>(null);
-
-  const socialItems = [
-    { 
-      icon: <Phone strokeWidth={2} size={20} />, 
-      label: "PHONE", 
-      value: "13800000000"
-    },
-    { 
-      icon: <MessageCircle strokeWidth={2} size={20} />, 
-      label: "WECHAT", 
-      value: "Evy_Design"
-    },
-    { 
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-          <path d="M19.242667 401.066667h68.053333s-7.936 113.962667-10.026667 133.973333c-2.090667 20.053333-9.6 73.898667-39.253333 108.117333L3.370667 567.594667c0 0.042667 7.936-7.509333 15.872-166.528zM133.461333 310.656h68.437334v315.008s-13.909333 49.536-52.309334 48.981333h-36.736l-29.866666-59.349333h44.074666c4.736 0 4.608-6.528 4.608-4.778667 0.042667 3.882667 1.792-299.861333 1.792-299.861333zM476.288 307.84l-34.517333 77.909333s-6.101333 15.573333 3.882666 16.128c10.026667 0.554667 57.301333 0 57.301334 0l-47.872 107.392s-4.992 13.909333 4.437333 13.909334h35.626667l-23.722667 55.637333h-78.08s-33.962667-4.992-20.053333-35.626667 34.517333-79.018667 34.517333-79.018666l-35.072 0.554666s-31.701333-6.698667-16.128-38.954666c15.573333-32.298667 54.528-117.973333 54.528-117.973334h65.152zM247.552 400.256H314.88s8.917333 162.773333 16 163.370667l-34.389333 77.610666s-31.701333-23.936-40.064-120.490666c-6.869333-79.701333-8.874667-120.490667-8.874667-120.490667zM362.752 600.576s2.218667 6.101333 27.818667 6.101333h77.909333l-31.146667 67.328H354.389333s-24.192 0.554667-23.509333-7.253333l31.872-66.176zM679.424 333.44v67.370667h-42.325333v205.909333h65.706666v67.328h-225.408l29.482667-66.773333h57.898667l1.109333-207.018667-40.618667-0.554667-1.664-66.261333z" />
-          <path d="M1024 615.04v-94.592c0-56.192-59.648-58.453333-59.648-58.453333h-17.237333V399.658667c0.554667-57.301333-68.992-66.218667-68.992-66.218667h-42.837334v-26.154667h-66.773333l1.109333 26.154667h-47.317333v66.218667h45.653333v62.890666H698.88v67.328l68.992 0.554667v143.573333h67.328V529.92h107.392c14.464 0 15.573333 14.464 15.573333 14.464s3.626667 39.381333 2.645334 56.192c-0.981333 16.682667-13.226667 15.573333-13.226667 15.573333h-55.637333l26.709333 57.898667h50.645333c59.050667 0 54.698667-59.008 54.698667-59.008z m-142.592-209.493333v55.637333H834.133333V400.512h40.362667c7.808 0 6.912 5.034667 6.912 5.034667z" />
-          <path d="M992 398.549333H960v-32c0-17.578667 14.421333-32 32-32 17.621333 0 32 14.421333 32 32s-14.378667 32-32 32z" />
-        </svg>
-      ), 
-      label: "XIAOHONGSHU",
-      value: "Evy的交互实验室"
-    },
-    { 
-      icon: <Instagram strokeWidth={2} size={20} />, 
-      label: "INSTAGRAM",
-      value: "evy_huang_design"
-    }
-  ];
-
-  const handleCopy = (text: string, idx: number) => {
-    navigator.clipboard.writeText(text);
-    setCopiedIcon(idx);
-    setTimeout(() => setCopiedIcon(null), 2000);
-  };
-
-  return (
-    <section id="contact-section" className="pt-40 pb-48 px-6 md:px-12 lg:px-24 relative">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-12 gap-12 md:gap-24 items-start">
-        {/* Left Side: Identity & CTA (7 Columns) */}
-        <div className="col-span-12 md:col-span-7 flex flex-col">
-          <div className="flex flex-col gap-10">
-            <p className="text-[16px] font-[200] font-sans leading-[1.8] text-white/50 max-w-[480px]">
-              Seeking deep collaboration in autonomous driving HMI or complex enterprise system design. 
-              If you have intriguing ideas or business challenges, feel free to reach out anytime.
-            </p>
-            <p className="text-[11px] text-white/30 font-sans tracking-[0.3em] uppercase mt-2">
-              © 2026 EVYHUANG. ALL RIGHTS RESERVED.
-            </p>
-          </div>
-        </div>
-
-        {/* Right Side: Refined List (5 Columns) */}
-        <div className="col-span-12 md:col-span-5 flex flex-col gap-20 items-start">
-          {/* Email Row */}
-          <EmailModule />
-
-          {/* Social Row */}
-          <div className="flex flex-col gap-8 items-start">
-            <span className="text-[12px] text-white/30 font-sans tracking-[0.2em] uppercase">SOCIAL</span>
-            <div className="flex items-center gap-10">
-              {socialItems.map((social, idx) => (
-                <div key={idx} className="relative flex flex-col items-center">
-                  {/* Tooltip */}
-                  <AnimatePresence>
-                    {hoveredIcon === idx && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10, x: '-50%' }}
-                        animate={{ 
-                          opacity: 1, 
-                          y: 0, 
-                          x: '-50%',
-                          backgroundColor: copiedIcon === idx ? 'rgba(255, 179, 71, 0.2)' : 'rgba(255, 255, 255, 0.05)'
-                        }}
-                        exit={{ opacity: 0, y: 10, x: '-50%' }}
-                        className="absolute bottom-full mb-3 left-1/2 z-[1000] px-3 py-1.5 rounded-[8px] backdrop-blur-[8px] border border-[#FFB347]/20 whitespace-nowrap pointer-events-none"
-                      >
-                        <span className="text-[11px] text-white/60 font-[400] font-sans tracking-[0.1em] uppercase">
-                          {copiedIcon === idx ? "ID COPIED!" : social.label}
-                        </span>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  {/* Icon Button */}
-                  <motion.button 
-                    onClick={() => handleCopy(social.value, idx)}
-                    onMouseEnter={() => setHoveredIcon(idx)}
-                    onMouseLeave={() => setHoveredIcon(null)}
-                    whileHover={{ x: 4, y: -4, scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className={`transition-colors duration-300 relative ${
-                      hoveredIcon === idx ? 'text-white/60' : 'text-white/30'
-                    }`}
-                    aria-label={social.label}
-                  >
-                    {social.icon}
-                  </motion.button>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 };
 
@@ -357,16 +156,11 @@ const ProjectCard = ({ index, name, enName, tags, zhDesc, enDesc, image, video, 
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       onClick={onClick}
-      className="group w-full grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 py-16 border-b border-white/5 last:border-none cursor-pointer"
+      className="group w-full grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 py-16 cursor-pointer"
     >
       {/* Left Side: Text Content (5 Columns) */}
       <div className="md:col-span-5 flex flex-col justify-center transition-transform duration-500 group-hover:-translate-y-2">
         <div className="flex flex-col gap-6">
-          {/* Index */}
-          <span className="text-[10px] font-mono text-[#49FFCC]/80 tracking-widest">
-            {String(index + 1).padStart(2, '0')}/
-          </span>
-
           {/* Title */}
           <div className="flex flex-col gap-1">
             <h3 className="text-[18px] font-medium text-white font-misans tracking-tight leading-tight">
@@ -495,43 +289,27 @@ const Typewriter = () => {
 const Hero = () => {
   return (
     <section id="hero-section" className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-[#0A0A0A]">
-      {/* Fluid Spectrum Glow (Concentrated Cluster) */}
+      {/* Fluid Spectrum Glow (复刻图二效果) */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ isolation: 'isolate' }}>
         <div className="relative w-full h-full flex items-center justify-center">
-          {/* Layer 1: Soft Orange-Red (Left-leaning) */}
-          <motion.div 
-            animate={{ 
-              x: [-20, 10, -20],
-              y: [-10, 10, -10],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute left-1/2 -translate-x-[380px] w-[400px] h-[300px] rounded-full bg-[#FF5032] opacity-60 blur-[80px] will-change-transform" 
-            style={{ mixBlendMode: 'screen', transform: 'translateZ(0) translateX(-380px)' }}
+
+          {/* 我们用最保守的内联 filter: blur() 强行渲染，确保 100% 生效 */}
+          {/* 层 1：左侧柔和的橙红 */}
+          <div
+            className="absolute left-1/2 -translate-x-[420px] w-[400px] h-[300px] rounded-full bg-[#FF5032] opacity-60 will-change-transform"
+            style={{ mixBlendMode: 'screen', filter: 'blur(80px)', transform: 'translateZ(0) translateX(-420px)' }}
           />
-          
-          {/* Layer 2: Bright Cyan (Center-focused) */}
-          <motion.div 
-            animate={{ 
-              x: [10, -10, 10],
-              y: [10, -10, 10],
-              scale: [1.1, 0.9, 1.1],
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute left-1/2 -translate-x-1/2 w-[450px] h-[320px] rounded-full bg-[#00FFFF] opacity-80 blur-[60px] will-change-transform" 
-            style={{ mixBlendMode: 'screen', transform: 'translateZ(0) translateX(-50%)' }}
+
+          {/* 层 2：中心明亮的青色 (核心) */}
+          <div
+            className="absolute left-1/2 -translate-x-1/2 w-[450px] h-[320px] rounded-full bg-[#00FFFF] opacity-80 will-change-transform"
+            style={{ mixBlendMode: 'screen', filter: 'blur(60px)', transform: 'translateZ(0) translateX(-50%)' }}
           />
-          
-          {/* Layer 3: Deep Blue (Right-leaning) */}
-          <motion.div 
-            animate={{ 
-              x: [20, -10, 20],
-              y: [-10, 15, -10],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute left-1/2 translate-x-[160px] w-[400px] h-[300px] rounded-full bg-[#0000FF] opacity-50 blur-[50px] will-change-transform" 
-            style={{ mixBlendMode: 'screen', transform: 'translateZ(0) translateX(160px)' }}
+
+          {/* 层 3：右侧深邃的蓝色 */}
+          <div
+            className="absolute left-1/2 translate-x-[160px] w-[400px] h-[300px] rounded-full bg-[#0000FF] opacity-50 will-change-transform"
+            style={{ mixBlendMode: 'screen', filter: 'blur(50px)', transform: 'translateZ(0) translateX(160px)' }}
           />
 
         </div>
@@ -593,79 +371,150 @@ const TextGlowWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 const AboutSection = ({ setCursorType }: { setCursorType: (type: string) => void }) => {
-  const infoBlocks = [
-    {
-      zh: "我是一名致力于逻辑与创意工程的设计师。目前在小米汽车负责复杂仿真系统架构，并探索 AI 驱动的设计流。同时，我正在北京邮电大学 (BUPT) 攻读 MBA，致力于在复杂业务中实现体验与战略的平衡。",
-      en: "I am a designer at the intersection of logic and creative engineering. Currently architecting complex simulation systems at Xiaomi Auto and pioneering AI-driven workflows. As an MBA candidate at BUPT, I bridge the gap between technology and business strategy to harmonize experience and value."
-    }
-  ];
-
   return (
-    <section id="about-section" className="py-40 px-6 md:px-12 lg:px-24 bg-[#0A0A0A]">
-      <div className="max-w-[1400px] mx-auto grid grid-cols-12 gap-12 md:gap-24 items-start">
-        {/* Left Side: Image (3 Columns) */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="col-span-12 md:col-span-3 flex justify-start items-start"
-        >
-          <div className="aspect-square w-full max-w-[180px] rounded-full border border-white/10 overflow-hidden bg-neutral-900/50 relative group">
-            <img 
-              src="/IMG_0127.JPG" 
-              alt="Portrait" 
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-80 group-hover:grayscale-0 transition-all duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/40 to-transparent pointer-events-none" />
-          </div>
-        </motion.div>
+    <section id="about-section" className="py-40 px-6 md:px-12 lg:px-32 bg-[#0A0A0A] text-white" style={{ fontFamily: '"Avenir Next", "Avenir", "Avenir-Light", "Helvetica Neue", Arial, sans-serif' }}>
+      <div className="max-w-[1200px] mx-auto">
+        
+        {/* Layout inspired by reference image */}
+        <div className="grid grid-cols-12 gap-8 md:gap-24 mb-20 items-start">
+          
+          {/* Left Column: Text Content */}
+          <div className="col-span-12 md:col-span-6 space-y-16">
+            <div className="space-y-4">
+              <h1 className="text-[64px] font-normal tracking-tight leading-none">Me.</h1>
+              <p className="text-[18px] text-white/30 font-light">(In short)</p>
+            </div>
 
-        {/* Right Side: Text Blocks (9 Columns) */}
-        <div className="col-span-12 md:col-span-9 flex flex-col">
-          <div className="flex flex-col gap-8">
-            {infoBlocks.map((block, index) => (
-              <motion.div 
-                key={index}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                onMouseEnter={() => setCursorType('inverted')}
-                onMouseLeave={() => setCursorType('default')}
-                className="cursor-none"
-              >
-                <div className="flex flex-col gap-3 pt-4 pb-2">
-                  <p className="text-[12px] text-white/80 font-misans leading-relaxed">
-                    {block.zh}
-                  </p>
-                  <p className="text-[12px] text-white/40 font-sans leading-relaxed">
-                    {block.en}
-                  </p>
+            <div className="space-y-8">
+              <div className="space-y-4">
+                <h2 className="text-[18px] font-medium tracking-wide">
+                  Yinwei Huang <span className="text-white/20 font-normal mx-2">/</span> <span className="text-white/30 font-normal">UI / UX Designer</span>
+                </h2>
+                <p className="text-[14px] text-white/60 leading-[2.2] font-normal max-w-[500px]">
+                  我是一名拥有 8 年互联网设计经验的 UI/UX 设计师，长期专注于复杂 B 端系统、自动驾驶研发工具链与 AI 辅助设计体验。擅长将复杂业务流程转化为清晰、可执行、易协作的产品体验，并推动设计方案在产品、研发 and 业务团队中落地。
+                </p>
+              </div>
+
+              {/* Contact Information with Icons */}
+              <div className="space-y-6 pt-12">
+                <div className="flex items-center gap-6 group">
+                  <div className="w-5 h-8 flex items-center justify-center">
+                    <Phone className="w-4 h-4 text-white/40" />
+                  </div>
+                  <span className="text-[14px] text-white/60">+86 16619782808</span>
                 </div>
-              </motion.div>
-            ))}
+                <div className="flex items-center gap-6 group">
+                  <div className="w-5 h-8 flex items-center justify-center">
+                    <MapPin className="w-4 h-4 text-white/40" />
+                  </div>
+                  <span className="text-[14px] text-white/60">Beijing, China</span>
+                </div>
+                <div className="flex items-center gap-6 group">
+                  <div className="w-5 h-8 flex items-center justify-center">
+                    <Mail className="w-4 h-4 text-white/40" />
+                  </div>
+                  <span className="text-[14px] text-white/60">hywrich0216@gmail.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            {/* Resume Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="mt-2"
-            >
-              <button 
-                onMouseEnter={() => setCursorType('inverted')}
-                onMouseLeave={() => setCursorType('default')}
-                className="h-[36px] px-6 rounded-full border border-white/20 bg-transparent text-white/60 text-[11px] font-sans font-medium tracking-[0.15em] uppercase flex items-center gap-2 transition-all duration-300 hover:bg-white/10 hover:border-white/40 hover:text-white cursor-none group"
-              >
-                VIEW FULL RESUME
-                <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-              </button>
-            </motion.div>
+          {/* Right Column: Portrait */}
+          <div className="col-span-12 md:col-span-6 relative">
+            <div className="aspect-[3/4] w-full overflow-hidden rounded-3xl border border-white/5 bg-neutral-900 group">
+              <img 
+                src="https://github.com/hywrich0216-commits/evy-portfolio-2026/blob/main/images/IMG_1274.JPG?raw=true" 
+                alt="黄尹薇" 
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+            </div>
           </div>
         </div>
+      </div>
+
+      <div className="max-w-[1200px] mx-auto">
+
+        {/* Experience Section */}
+        <div className="grid grid-cols-12 gap-8 mb-24 border-t border-white/10 pt-8">
+          <div className="col-span-12 md:col-span-3">
+            <h2 className="text-[14px] text-white/40 uppercase tracking-[0.3em] font-normal">Experience</h2>
+          </div>
+          <div className="col-span-12 md:col-span-9 space-y-20">
+            {/* Main Role */}
+            <div className="space-y-2">
+              <p className="text-[14px] text-white font-medium">
+                小米汽车 - 自动驾驶部门 
+                <span className="text-white/20 font-normal mx-2">/</span> 
+                <span className="text-white/40 font-normal">Beijing, China / 2023 – Present</span>
+              </p>
+              <div className="text-[14px] text-white/60 space-y-1.5 leading-relaxed font-normal">
+                <p>负责 MiSim 仿真平台、Miviz Studio 可视化工具等内部研发平台 design</p>
+                <p>优化任务创建、结果分析、对比诊断、场景管理等核心链路</p>
+                <p>探索 AI Agent 与 platform 能力结合，提升研发工具使用效率</p>
+              </div>
+            </div>
+
+            {/* Past Projects */}
+            <div className="space-y-8 pt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10">
+                {[
+                  { title: "海外社交 Web 产品", role: "Product Design", desc: "主导产品 0-1 的交互与视觉体系构建" },
+                  { title: "清华国际展视觉设计", role: "Visual System", desc: "负责展会全案视觉落地与物料设计" },
+                  { title: "聆心智能小程序 / App", role: "UX/UI Design", desc: "优化 AI 聊天产品的移动端交互体验" },
+                  { title: "天格计划品牌设计", role: "Identity", desc: "科学实验项目的品牌规范与视觉传达" }
+                ].map((proj, i) => (
+                  <div key={i} className="space-y-2">
+                    <p className="text-[14px] text-white font-medium">{proj.title} <span className="text-white/20 font-normal mx-2">/</span> <span className="text-white/40 font-normal">{proj.role}</span></p>
+                    <p className="text-[14px] text-white/60 leading-relaxed">{proj.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Skills Section */}
+        <div className="grid grid-cols-12 gap-8 mb-24 border-t border-white/10 pt-2">
+          <div className="col-span-12 md:col-span-3">
+            <h2 className="text-[14px] text-white/40 uppercase tracking-[0.3em] font-normal">Skills</h2>
+          </div>
+          <div className="col-span-12 md:col-span-9">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+              <div className="space-y-6">
+                <h3 className="text-[14px] text-white/40 font-normal">Design Expertise</h3>
+                <div className="flex flex-col gap-y-3">
+                  {[
+                    "Complex Workflow Design",
+                    "Enterprise UX Platforms",
+                    "AI-native Interaction",
+                    "Data Visualization",
+                    "Cross-functional Collaboration"
+                  ].map((s, i) => (
+                    <span key={i} className="text-[14px] text-white/60 font-normal">{s}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="space-y-6">
+                <h3 className="text-[14px] text-white/40 font-normal">Creative Toolchain</h3>
+                <div className="flex flex-col gap-y-3">
+                  {[
+                    "Figma",
+                    "Cursor",
+                    "Claude",
+                    "AI Studio",
+                    "Vercel",
+                    "GitHub",
+                    "After Effects"
+                  ].map((s, i) => (
+                    <span key={i} className="text-[14px] text-white/60 font-normal">{s}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );
@@ -679,8 +528,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       tags: ["DATA VISUALIZATION", "B-END TOOL"],
       zhDesc: "负责车辆感知数据可视化与 B 端工具链设计，解决海量数据下的实时渲染与分析效率问题。",
       enDesc: "Responsible for vehicle perception data visualization and B-end toolchain design, solving real-time rendering and analysis efficiency issues under massive data.",
-      image: "/Browser Desktop.png",
-      video: "/屏幕录制2026-04-12 11.00.23.mov",
+      image: "https://github.com/hywrich0216-commits/evy-portfolio-2026/blob/main/images/%E5%8F%AF%E8%A7%86%E5%8C%96-cover.png?raw=true",
     },
     { 
       name: "清华天格计划项目", 
@@ -696,7 +544,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       tags: ["DESIGN SYSTEM", "COMPONENT LIBRARY"],
       zhDesc: "小米汽车 B 端组件库设计系统，构建统一的设计语言与工程化规范。",
       enDesc: "Xiaomi EV B-end component library design system, building a unified design language and engineering specifications.",
-      image: "/cover.png",
+      image: "https://github.com/hywrich0216-commits/evy-portfolio-2026/blob/main/images/%E6%B1%BD%E8%BD%A6B%E7%AB%AF%E8%AE%BE%E8%AE%A1%E7%B3%BB%E7%BB%9Fcover.png?raw=true",
     },
     { 
       name: "小米汽车MiSim仿真平台", 
@@ -704,7 +552,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       tags: ["SYSTEM ARCHITECTURE", "HMI DESIGN"],
       zhDesc: "负责构建高精度的自动驾驶仿真界面，利用数据可视化技术解决复杂场景下的交互效率问题。",
       enDesc: "Architecting high-precision autonomous driving simulation interfaces, leveraging data visualization to solve complex interaction efficiency challenges.",
-      image: "/misim仿真平台.png",
+      image: "https://github.com/hywrich0216-commits/evy-portfolio-2026/blob/main/images/%E4%BB%BF%E7%9C%9F-cover.png?raw=true",
     },
     { 
       name: "清华国际艺术与设计展", 
@@ -713,15 +561,15 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       zhDesc: "沉浸式线上展厅设计，探索数字化叙事在艺术展览中的应用。",
       enDesc: "Immersive online exhibition hall design, exploring the application of digital narrative in art exhibitions.",
       image: "https://picsum.photos/seed/tsinghua/1200/800",
-      video: "/清华国际展录屏.mov",
+      video: "https://github.com/hywrich0216-commits/evy-portfolio-2026/raw/refs/heads/main/images/%E6%B8%85%E5%8D%8E%E5%9B%BD%E9%99%85%E5%B1%95.mov",
     },
     { 
-      name: "tappal社交软件", 
+      name: "Tappal社交软件", 
       enName: "tappal Social App",
       tags: ["SOCIAL INTERACTION", "EMOTIONAL CONNECTION"],
       zhDesc: "探索性社交交互设计，致力于提升用户间的情感连接与互动体验。",
       enDesc: "Exploratory social interaction design, dedicated to enhancing emotional connection and interaction experience among users.",
-      image: "/host.png",
+      image: "https://github.com/hywrich0216-commits/evy-portfolio-2026/blob/main/images/tappal%E9%A6%96%E9%A1%B5.png?raw=true",
     },
   ];
 
@@ -1526,8 +1374,6 @@ export default function App() {
             setActiveTab('ABOUT');
           } else if (id === 'gallery-section') {
             setActiveTab('PROJECT');
-          } else if (id === 'contact-section') {
-            setActiveTab('CONTACT');
           }
         }
       });
@@ -1535,7 +1381,7 @@ export default function App() {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
     
-    const sections = ['hero-section', 'about-section', 'gallery-section', 'contact-section'];
+    const sections = ['hero-section', 'about-section', 'gallery-section'];
     sections.forEach(id => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
@@ -1573,7 +1419,6 @@ export default function App() {
       <Hero />
       <AboutSection setCursorType={setCursorType} />
       <Gallery onProjectSelect={setSelectedProject} />
-      <ContactSection />
       {!selectedProject && <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />}
 
       {/* Project Detail View Overlay */}
