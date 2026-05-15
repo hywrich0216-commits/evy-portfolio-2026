@@ -423,7 +423,7 @@ const AboutSection = ({ setCursorType }: { setCursorType: (type: string) => void
           <div className="col-span-12 md:col-span-6 relative">
             <div className="aspect-[3/4] w-full overflow-hidden rounded-3xl border border-white/5 bg-neutral-900 group">
               <img 
-                src="https://github.com/hywrich0216-commits/evy-portfolio-2026/blob/main/images/IMG_1274.JPG?raw=true" 
+                src="/生活照.JPG" 
                 alt="黄尹薇" 
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -528,7 +528,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       tags: ["DATA VISUALIZATION", "B-END TOOL"],
       zhDesc: "负责车辆感知数据可视化与 B 端工具链设计，解决海量数据下的实时渲染与分析效率问题。",
       enDesc: "Responsible for vehicle perception data visualization and B-end toolchain design, solving real-time rendering and analysis efficiency issues under massive data.",
-      image: "https://github.com/hywrich0216-commits/evy-portfolio-2026/blob/main/images/%E5%8F%AF%E8%A7%86%E5%8C%96-cover.png?raw=true",
+      image: "/可视化-cover.png",
     },
     { 
       name: "清华天格计划项目", 
@@ -536,7 +536,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       tags: ["SCIENTIFIC MONITORING", "CROSS-DISCIPLINARY"],
       zhDesc: "科学卫星数据监测看板设计，致力于在复杂业务中实现体验与战略的平衡。",
       enDesc: "Scientific satellite data monitoring dashboard design, dedicated to balancing experience and strategy in complex business.",
-      image: "/主页.png",
+      image: "/天格计划主页.png",
     },
     { 
       name: "MIcar-B Design System", 
@@ -544,7 +544,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       tags: ["DESIGN SYSTEM", "COMPONENT LIBRARY"],
       zhDesc: "小米汽车 B 端组件库设计系统，构建统一的设计语言与工程化规范。",
       enDesc: "Xiaomi EV B-end component library design system, building a unified design language and engineering specifications.",
-      image: "https://github.com/hywrich0216-commits/evy-portfolio-2026/blob/main/images/%E6%B1%BD%E8%BD%A6B%E7%AB%AF%E8%AE%BE%E8%AE%A1%E7%B3%BB%E7%BB%9Fcover.png?raw=true",
+      image: "/汽车B端设计系统cover.png",
     },
     { 
       name: "小米汽车MiSim仿真平台", 
@@ -552,7 +552,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       tags: ["SYSTEM ARCHITECTURE", "HMI DESIGN"],
       zhDesc: "负责构建高精度的自动驾驶仿真界面，利用数据可视化技术解决复杂场景下的交互效率问题。",
       enDesc: "Architecting high-precision autonomous driving simulation interfaces, leveraging data visualization to solve complex interaction efficiency challenges.",
-      image: "https://github.com/hywrich0216-commits/evy-portfolio-2026/blob/main/images/%E4%BB%BF%E7%9C%9F-cover.png?raw=true",
+      image: "/仿真-cover.png",
     },
     { 
       name: "清华国际艺术与设计展", 
@@ -561,7 +561,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       zhDesc: "沉浸式线上展厅设计，探索数字化叙事在艺术展览中的应用。",
       enDesc: "Immersive online exhibition hall design, exploring the application of digital narrative in art exhibitions.",
       image: "https://picsum.photos/seed/tsinghua/1200/800",
-      video: "https://github.com/hywrich0216-commits/evy-portfolio-2026/raw/refs/heads/main/images/%E6%B8%85%E5%8D%8E%E5%9B%BD%E9%99%85%E5%B1%95.mov",
+      video: "/images_清华国际展.mov",
     },
     { 
       name: "Tappal社交软件", 
@@ -569,7 +569,7 @@ const Gallery = ({ onProjectSelect }: { onProjectSelect: (project: any) => void 
       tags: ["SOCIAL INTERACTION", "EMOTIONAL CONNECTION"],
       zhDesc: "探索性社交交互设计，致力于提升用户间的情感连接与互动体验。",
       enDesc: "Exploratory social interaction design, dedicated to enhancing emotional connection and interaction experience among users.",
-      image: "https://github.com/hywrich0216-commits/evy-portfolio-2026/blob/main/images/tappal%E9%A6%96%E9%A1%B5.png?raw=true",
+      image: "/tappal首页.png",
     },
   ];
 
